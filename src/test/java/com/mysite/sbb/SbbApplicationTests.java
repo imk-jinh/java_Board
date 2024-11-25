@@ -11,19 +11,19 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerRepository;
 import com.mysite.sbb.question.QuestionRepository;
+import com.mysite.sbb.question.QuestionService;
 
 @SpringBootTest
 class SbbApplicationTests {
 	@Autowired
-	QuestionRepository questionRepository;
-	@Autowired
-	AnswerRepository answerRepository;
+	private QuestionService questionService;
 
 	@Test
-	void testJpa() {
-		Optional<Answer> oa = this.answerRepository.findById(1);
-		assertTrue(oa.isPresent());
-		Answer answer = oa.get();
-		assertEquals(2, answer.getQuestion().getId());
+	void testJPA() {
+		for(int i = 1; i <= 300; i++){
+			String subject = String.format("테스트 데이터:[%03d]", i);
+			String content = "내용 없음";
+			this.questionService.create(subject, content);
+		}
 	}
 }
